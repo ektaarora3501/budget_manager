@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+<head>
+  <title>
+    index
+  </title>
+  <style>
+  .header{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  background-color:#6a1b9a;
+  height:60px;
+  text-align: center;
+  font-size:40px;
+  color:white;
+
+  }
+
+.home{
+  background-color: #ce93d8;
+  height:35px;
+}
+
+font{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size:20px;
+  }
+
+.image{
+  width:60%;
+  height: 50%;
+  margin-top: 2%;
+
+}
+
+.main{
+  font-size: 30px;
+  margin-top: 2%;
+  margin-left: 30%;
+}
+
+table{
+    padding:10px;
+}
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    Budget Manager
+  </div>
+  <div class="home">
+   <table>
+     <tr>
+       <td> Signup</td>
+       <td>Login</td>
+     </tr>
+   </table>
+  </div>
+
+<table>
+  <tr>
+    <td>
+      <div class="image">
+      <img src="{% static "bill/index.jpeg" %}">
+</div>
+    </td>
+    <td>
+
+      Spent on goodies and stuff and dont have a clear budget maintainer...
+      you can use our budget manager..
+      
+
+    </td>
+  </tr>
+</table>
+
+
+
+
+  </body>
+
+
+</html>

@@ -1,0 +1,79 @@
+<html>
+<head>
+  <title>
+    {% block title %}
+    Sign up form
+  </title>
+  {% endblock %}
+  <style>
+
+  .field{
+    color: blue;
+    align: center;
+    margin-left: 40%;
+    margin-right: auto;
+
+  }
+  .error{
+    color:red;
+  }
+
+
+  .header{
+    margin-bottom: 5%;
+    background-color:#F08080;
+    height: 8%;
+    margin-right:0%;
+    color: #00FFFF;
+    text-align: center;
+    font-size: 40px;
+    font-style: Comic Sans;
+
+
+  }
+
+  sup{
+    color: #6A5ACD;
+  }
+
+  </style>
+</head>
+<script>
+if(!!window.performance && window.performance.navigation.type == 2)
+{
+    window.location.reload();
+}
+</script>
+<body onunload="">
+
+{% block container %}
+  <form action="" method="post" >
+    <div class="container">
+     <div class="body">
+    {% csrf_token %}
+  {% for field in form %}
+    <div class="row">
+       <div class="col-md-2">
+         <div class="field">
+        {{ field.label_tag }}
+         <br>{{ field }}
+        {% if field.help_text %}
+          <sup>{{ field.help_text }}</sup>
+        {% endif %}
+        <div class="error">
+        {{ field.errors }}
+      </div>
+
+       </div>
+</div>
+       </div>
+ {% endfor %}
+ <div class="field">
+  <input type="submit" value="Submit">
+  {% endblock %}
+</div>
+</div>
+</div>
+  </form>
+</body>
+</html>
