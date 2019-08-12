@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from bill.models import Regis,login,budget
-from bill.forms import SignupForm,LogForm,AddForm
+from bill.models import Regis,login,budget,remind
+from bill.forms import SignupForm,LogForm,AddForm,RemindForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse,reverse_lazy
 from django.shortcuts import redirect
@@ -110,6 +110,24 @@ def dashboard(request,username):
     else:
         return Login(request)
 
+def show(request,user):
+    if login.objects.filter(username=user).exists():
+        values=remind.objects.filter(username=user).all()
+
+        for value in values:
+            print(value.username)
+            print(value.pay)
+
+        context={
+        'user':user,
+        'values':values,
+        }
+
+        return render(request,'remind_show.html',context)
+
+    else:
+        return Login(request)
+
 
 def add(request,user):
     if login.objects.filter(username=user).exists():
@@ -137,7 +155,7 @@ def add(request,user):
 
         context={
         'form':form,
-        #'book_instance':book_instance,
+
         }
 
 
@@ -145,6 +163,57 @@ def add(request,user):
 
     else:
         return Login(request)
+
+
+def Remind(request,user):
+    if login.objects.filter(username=user).exists():
+        if request.method=='POST':
+           form =RemindForm(request.POST)
+           print("post")
+
+           if form.is_valid():
+               us=remind()
+               us.username=user
+               us.pay=form.cleaned_data['to_pay']
+               us.amount=form.cleaned_data['amount']
+               us.date=form.cleaned_data['date']
+
+               try:
+                   us.save()
+               except:
+                   pass
+
+               return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+
+        else:
+            #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
+
+            form=RemindForm()
+
+        context={
+        'form':form,
+
+        }
+
+
+        return render(request,'remind_form.html',context)
+
+    else:
+        return Login(request)
+
+
+def Paid(request,id,user):
+    value=remind.objects.get(id=id)
+    bug=budget()
+    bug.username=user
+    bug.message=value.pay
+    bug.amount=value.amount
+
+    bug.save()
+    remind.objects.filter(id=id).delete()
+
+    return dashboard(request,user)
+
 
 
 

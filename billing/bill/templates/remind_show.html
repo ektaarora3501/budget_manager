@@ -131,46 +131,35 @@ if(!!window.performance && window.performance.navigation.type == 2)
    <a href="{% url 'add-amount' user %}">
    <font style="color:#1f1348">Add amount</font></a>
      <a href="{% url 'logout' user %}"><font style="color:#1f1348; margin-left:10%">logout</font></a>
-     <a href="{% url 'show_all' user %}"><font style="color:#1f1348; margin-left:10%">Show Reminders</font></a>
 </div>
 
   </div>
 <br>
-<div class="intro">
-  hello {{ user }} to your dashboard
-  <br>
 </div>
 <br><br>
-  {% if sts %}
+  {% if values %}
   <table id="customers">
     <tr>
     <th>Message</th>
     <th>Amount</th>
-    <th>Delete budget</th>
+    <th>Date</th>
+    <th>paid</th>
   </tr>
-     {% for st in sts %}
+     {% for value in values %}
      <tr>
-     <td>{{ st.message }}</td>
-     <td>{{ st.amount }}</td>
-     <td><a href="{% url 'delete' st.id user %}">delete</a>
+     <td>{{ value.pay }}</td>
+     <td>{{ value.amount }}</td>
+     <td>{{ value.date }}</td>
+
+     <td><a href="{% url 'paid' value.id user %}">paid  </a></td>
    </tr>
      {% endfor %}
     {% else %}
-     no budget to display
+     No Reminders to Set
   {% endif %}
 
 </table>
 <br>
-<div class="total">
-  {% if sts %}
-total Expenditure till now (in Rs.) {{ total }}
-{% endif %}
-</div>
-<br>
-
-<div class="remind">
-  <a href="{% url 'remind' user %}">click here to add bill reminders.</a>
-</div>
 
   <div class="footer">
   </div>

@@ -1,8 +1,8 @@
-from django.forms import PasswordInput,forms,CharField,EmailField,IntegerField
+from django.forms import PasswordInput,forms,CharField,EmailField,IntegerField,DateField,TextInput,DecimalField,CheckboxInput
 from bill.models import Regis
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-
+from bootstrap_datepicker_plus import DatePickerInput
 
 class SignupForm(forms.Form):
     first_name=CharField(max_length=100)
@@ -48,10 +48,13 @@ class SignupForm(forms.Form):
 class LogForm(forms.Form):
     username=CharField(max_length=100)
     password=CharField(max_length=12,widget=PasswordInput)
+    check=CharField(help_text="keep me logged in ",widget=CheckboxInput)
+
 
     def clean_password(self):
         name=self.cleaned_data['username']
         pas=self.cleaned_data['password']
+        #print(self.cleaned_data['check'])
 
         if Regis.objects.filter(user_name=name).exists():
             pass
@@ -71,7 +74,15 @@ class LogForm(forms.Form):
             raise ValidationError(_("incorrect password !!"))
         return pas
 
+    def clean_check(self):
+         value=self.cleaned_data['check']
+         print("value of checkbox",value)
 
 class AddForm(forms.Form):
     message=CharField(max_length=100,help_text="Enter message of your amount")
     amount=IntegerField()
+
+class RemindForm(forms.Form):
+    to_pay=CharField(max_length=100,help_text="Enter reminding information")
+    amount=DecimalField(max_digits=8,decimal_places=4)
+    date=DateField()

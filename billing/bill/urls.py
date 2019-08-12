@@ -9,6 +9,9 @@ urlpatterns=[
      path('dashboard/<username>',views.dashboard,name="dashboard"),
      path('logout/<user>',views.logout,name='logout'),
      path('amount/<user>/add',views.add,name="add-amount"),
-     path('amount/delete/<int:id>/<user>',views.delete,name='delete')
+     path('amount/delete/<int:id>/<user>',views.delete,name='delete'),
+     path('remind/<user>/bill',views.Remind,name="remind"),
+     path('remind/paid/<int:id>/<user>',views.Paid,name="paid"),
+     path('show/remind/<user>/all',views.show,name="show_all")
 
 ]
