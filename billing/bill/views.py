@@ -196,17 +196,27 @@ def Remind(request,user):
            if form.is_valid():
                us=remind()
                us.username=user
+<<<<<<< HEAD
                us.amount=form.cleaned_data['amount']
                us.pay=form.cleaned_data['to_pay']
+=======
+               us.pay=form.cleaned_data['to_pay']
+               us.amount=form.cleaned_data['amount']
+>>>>>>> master
                us.date=form.cleaned_data['date']
 
                try:
                    us.save()
                except:
                    pass
+<<<<<<< HEAD
                x=datetime.datetime.now().month
                print(x)
                return HttpResponseRedirect(reverse('dashboard',args=(user,x)))
+=======
+
+               return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+>>>>>>> master
 
         else:
             #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
@@ -231,12 +241,20 @@ def Paid(request,id,user):
     bug.username=user
     bug.message=value.pay
     bug.amount=value.amount
+<<<<<<< HEAD
     bug.save()
     x=datetime.datetime.now().month
     print(x)
     remind.objects.filter(id=id).delete()
 
     return dashboard(request,user,x)
+=======
+
+    bug.save()
+    remind.objects.filter(id=id).delete()
+
+    return dashboard(request,user)
+>>>>>>> master
 
 
 
