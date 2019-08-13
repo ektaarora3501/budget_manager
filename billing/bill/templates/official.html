@@ -1,0 +1,125 @@
+<html>
+<head>
+  <title>
+    official page
+  </title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js">
+  </script>
+
+  <script>
+  if(!!window.performance && window.performance.navigation.type == 2)
+  {
+      window.location.reload();
+  }
+  </script>
+<style>
+.sidenav {
+  height: 100%;
+  width: 130px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:#E0FFFF;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 130px; /* Same as the width of the sidenav */
+  font-size: 18px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+.header{
+font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+background-color: #012e69;
+height:60px;
+text-align: center;
+font-size:40px;
+color:white;
+
+}
+
+
+#myDiv{
+  margin-left: 40%;
+  margin-top: 10%;
+}
+
+.footer{
+  height:150px;
+  background-color:#012e69;
+  width:100%;
+  margin-top: 40%;
+}
+
+
+
+</style>
+</head>
+<body onunload="">
+  <div class="header">
+    Budget manager
+  </div>
+
+  <div class="sidenav">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#clients">Clients</a>
+  <a href="#contact">Contact</a>
+</div>
+<div class="main">
+  This chart shows your current month spent history
+  <div id='myDiv'>
+  </div>
+  <script>
+{% if sts %}
+  var b=[];
+  var d=[];
+  {% for st in sts %}
+   var a=[{{ st.amount }}];
+   var b=b.concat(a);
+   var c=['{{ st.message }}'];
+   var d=d.concat(c);
+   {% endfor %}
+
+
+  var data = [{
+  values:b,
+  labels:d,
+  type: 'pie'
+  }];
+
+  var layout = {
+  height: 500,
+  width: 600
+  };
+
+  Plotly.newPlot('myDiv', data, layout);
+
+  </script>
+
+  {% else %}
+    <div class="empty">
+      no budget to display
+    </div>
+  {% endif %}
+</div>
+
+<div class="footer">
+</div>
+</body>
+</html>
