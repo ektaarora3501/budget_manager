@@ -34,6 +34,11 @@ class budget(models.Model):
     message=models.CharField(max_length=100)
     amount=models.IntegerField(default=0)
     date=models.DateField(_("Date"),default=datetime.date.today)
+<<<<<<< HEAD
+    x=datetime.datetime.now()
+    month=models.CharField(default=x.month,max_length=2)
+=======
+>>>>>>> master
 
     def __str__(self):
         return f"{self.username},{self.message},{self.amount},{self.date}"

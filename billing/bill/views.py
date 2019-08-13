@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+import datetime
 
 # Create your views here.
 
@@ -63,7 +64,7 @@ def Login(request):
            except:
                pass
            print(user)
-           return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+           return HttpResponseRedirect(reverse('main',args=(user,)))
 
     else:
         #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
@@ -86,18 +87,37 @@ def confirm(request,user):
     return render(request,'confirm.html',context)
 
 
-def dashboard(request,username):
+def Official(request,username):
+    if login.objects.filter(username=username).exists():
+        x=datetime.datetime.now()
+        sts=budget.objects.filter(username=username,month=x.month).all()
+        context={
+        'sts':sts,
+        }
+        return render(request,'official.html',context)
+
+    else:
+        return Login(request)
+
+
+
+
+
+
+
+def dashboard(request,username,month):
     if login.objects.filter(username=username).exists():
         st=Regis.objects.get(user_name=username)
 
         total=0
-        sts=budget.objects.filter(username=username).all()
+        sts=budget.objects.filter(username=username,month=month).all()
         #budget.objects.filter(id=7).delete()
         for st in sts:
             print(st.username)
             print(st.message)
             print(st.amount)
             print("id",st.id)
+            print("date",st.date.month)
             total+=st.amount
         print(total)
         context={
@@ -145,8 +165,10 @@ def add(request,user):
                    us.save()
                except:
                    pass
+               x=datetime.datetime.now().month
+               print(x)
 
-               return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+               return HttpResponseRedirect(reverse('dashboard',args=(user,x)))
 
         else:
             #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
@@ -174,16 +196,27 @@ def Remind(request,user):
            if form.is_valid():
                us=remind()
                us.username=user
+<<<<<<< HEAD
+               us.amount=form.cleaned_data['amount']
+               us.pay=form.cleaned_data['to_pay']
+=======
                us.pay=form.cleaned_data['to_pay']
                us.amount=form.cleaned_data['amount']
+>>>>>>> master
                us.date=form.cleaned_data['date']
 
                try:
                    us.save()
                except:
                    pass
+<<<<<<< HEAD
+               x=datetime.datetime.now().month
+               print(x)
+               return HttpResponseRedirect(reverse('dashboard',args=(user,x)))
+=======
 
                return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+>>>>>>> master
 
         else:
             #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
@@ -208,11 +241,20 @@ def Paid(request,id,user):
     bug.username=user
     bug.message=value.pay
     bug.amount=value.amount
+<<<<<<< HEAD
+    bug.save()
+    x=datetime.datetime.now().month
+    print(x)
+    remind.objects.filter(id=id).delete()
+
+    return dashboard(request,user,x)
+=======
 
     bug.save()
     remind.objects.filter(id=id).delete()
 
     return dashboard(request,user)
+>>>>>>> master
 
 
 
@@ -222,5 +264,7 @@ def logout(request,user):
     return index(request)
 
 def delete(request,id,user):
+    x=budget.objects.get(id=id)
+    print("value of x=",x.month)
     budget.objects.filter(id=id).delete()
-    return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+    return HttpResponseRedirect(reverse('dashboard',args=(user,x.month)))
