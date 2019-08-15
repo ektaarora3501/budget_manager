@@ -238,5 +238,6 @@ def logout(request,user):
     return index(request)
 
 def delete(request,id,user):
+    x=budget.objects.get(id=id,username=user).month
     budget.objects.filter(id=id).delete()
-    return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+    return HttpResponseRedirect(reverse('dashboard',args=(user,x)))
