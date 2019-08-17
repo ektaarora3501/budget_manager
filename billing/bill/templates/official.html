@@ -55,7 +55,6 @@ color:white;
 
 
 #myDiv{
-  margin-left: 40%;
   margin-top: 10%;
 }
 
@@ -64,6 +63,10 @@ color:white;
   background-color:#012e69;
   width:100%;
   margin-top: 40%;
+}
+
+#test{
+  width: 100%;
 }
 
 
@@ -83,8 +86,19 @@ color:white;
 </div>
 <div class="main">
   This chart shows your current month spent history
+  <table>
+    <tr>
+    <td>
   <div id='myDiv'>
-  </div>
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    <div id='test'>
+    </div>
+</td>
+
   <script>
 {% if sts %}
   var b=[];
@@ -110,6 +124,31 @@ color:white;
 
   Plotly.newPlot('myDiv', data, layout);
 
+  var b=[];
+  var d=[];
+  {% for s in sp %}
+   var a=[{{ s.month }}];
+   var b=b.concat(a);
+   var c=[{{ s.total }}];
+   var d=d.concat(c);
+   {% endfor %}
+
+
+    var trace1 = {
+    x: b,
+    y: d,
+    type: 'scatter'
+    };
+
+    var layout = {
+    height: 500,
+    width: 800,
+    };
+
+
+   data=[trace1,];
+   Plotly.newPlot('test', data,layout);
+
   </script>
 
   {% else %}
@@ -119,7 +158,5 @@ color:white;
   {% endif %}
 </div>
 
-<div class="footer">
-</div>
 </body>
 </html>

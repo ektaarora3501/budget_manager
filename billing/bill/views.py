@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from bill.models import Regis,login,budget,remind
+from bill.models import Regis,login,budget,remind,sumup
 from bill.forms import SignupForm,LogForm,AddForm,RemindForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse,reverse_lazy
@@ -90,8 +90,10 @@ def Official(request,username):
     if login.objects.filter(username=username).exists():
         x=datetime.datetime.now()
         sts=budget.objects.filter(username=username,month=x.month).all()
+        sp=sumup.objects.filter(username=username).all()
         context={
         'sts':sts,
+        'sp':sp,
         }
         return render(request,'official.html',context)
 
@@ -116,10 +118,23 @@ def dashboard(request,username,month):
             print("id",st.id)
             total+=st.amount
         print(total)
+
+        if(sumup.objects.filter(username=username,month=month).exists()):
+            sp=sumup.objects.get(username=username,month=month)
+            sp.total=total
+            sp.save()
+        else:
+            sp=sumup()
+            sp.username=username
+            sp.month=month
+            sp.total=total
+            sp.save()
+
         context={
         'user':username,
         'sts':sts,
         'total':total,
+        #'sp':sp,
         }
         return render(request,'dashboard.html',context)
 
