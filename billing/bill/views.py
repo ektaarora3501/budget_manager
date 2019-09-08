@@ -190,7 +190,6 @@ def add(request,user):
 
         }
 
-
         return render(request,'add.html',context)
 
     else:
@@ -209,13 +208,14 @@ def Remind(request,user):
                us.pay=form.cleaned_data['to_pay']
                us.amount=form.cleaned_data['amount']
                us.date=form.cleaned_data['date']
+               x=datetime.datetime.now()
 
                try:
                    us.save()
                except:
                    pass
 
-               return HttpResponseRedirect(reverse('dashboard',args=(user,)))
+               return HttpResponseRedirect(reverse('dashboard',args=(user,x.month)))
 
         else:
             #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
@@ -239,13 +239,11 @@ def Paid(request,id,user):
     bug.username=user
     bug.message=value.pay
     bug.amount=value.amount
-
+    x=datetime.datetime.now()
     bug.save()
     remind.objects.filter(id=id).delete()
 
-    return dashboard(request,user)
-
-
+    return dashboard(request,user,x.month)
 
 
 def logout(request,user):
