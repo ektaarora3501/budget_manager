@@ -94,6 +94,8 @@ def Official(request,username):
         context={
         'sts':sts,
         'sp':sp,
+        'month':x.month,
+        'user':username,
         }
         return render(request,'official.html',context)
 
@@ -144,7 +146,7 @@ def dashboard(request,username,month):
 def show(request,user):
     if login.objects.filter(username=user).exists():
         values=remind.objects.filter(username=user).all()
-
+        x=datetime.datetime.now().month
         for value in values:
             print(value.username)
             print(value.pay)
@@ -152,6 +154,7 @@ def show(request,user):
         context={
         'user':user,
         'values':values,
+        'month':x,
         }
 
         return render(request,'remind_show.html',context)
@@ -178,8 +181,8 @@ def add(request,user):
                    pass
 
                x=datetime.datetime.now()
-               return HttpResponseRedirect(reverse('dashboard',args=(user,x.month)))
 
+               return HttpResponseRedirect(reverse('dashboard',args=(user,x.month)))
         else:
             #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
 
@@ -215,7 +218,7 @@ def Remind(request,user):
                except:
                    pass
 
-               return HttpResponseRedirect(reverse('dashboard',args=(user,x.month)))
+               return HttpResponseRedirect(reverse('show_all',args=(user,)))
 
         else:
             #proposed_date=datetime.date.today()+datetime.timedelta(weeks=3)
