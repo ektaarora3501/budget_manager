@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>
-    Dashboard
+    Reminders
   </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <style>
@@ -9,109 +9,110 @@
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
-}
+  }
 
-#customers td, #customers th {
+  #customers td, #customers th {
   border: 1px solid #ddd;
   padding:10px;
   text-align: justify;
 
-}
+  }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
 
-#customers tr:hover {background-color: #ddd;}
+  #customers tr:hover {background-color: #ddd;}
 
-#customers th {
+  #customers th {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: left;
-  background-color: #7e57c2;
-  color: white;
-}
+  background-color: #42f5ec;
+  color:#012e69;
+  }
 
 
-nav ul {
-text-align: right;
+  nav ul {
+  text-align: right;
 
-width: 100%;
-background-color: #a7ffeb;
-}
-nav ul li {
-display: inline-block;
-margin: 10px;
-margin-bottom: 20px;
-margin-top: 10px;
-font-size:20px;
-}
-nav ul li a {
-color: #008080;
-text-decoration: none;
-}
-nav ul li a:hover {
-color: #9c27b0;
-}
-
-
-.header{
-font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-background-color: #4d2a97;
-height:50px;
-text-align: center;
-font-size:40px;
-color:white;
-
-}
+  width: 100%;
+  background-color: #a7ffeb;
+  }
+  nav ul li {
+  display: inline-block;
+  margin: 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size:20px;
+  }
+  nav ul li a {
+  color: #008080;
+  text-decoration: none;
+  }
+  nav ul li a:hover {
+  color: #9c27b0;
+  }
 
 
-font{
+  .header{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  background-color:#012e69;
+  height:50px;
+  text-align: center;
+  font-size:40px;
+  color:white;
+  }
+
+
+
+  font{
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   font-size:20px;
-}
+  }
 
-.add{
-  margin-left:60%;
+  .add{
+  margin-left:50%;
   font-size: 20px;
   color: black;
   margin-top: auto;
   margin-bottom: 0%;
-}
+  }
 
-.nabvbar{
+  .nabvbar{
   height: 35px;
-  background-color: #aa95f3;
+  background-color:white;
   color: white;
-}
+  }
 
 
-.intro{
+  .intro{
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   font-size: 20px;
   margin-left: 5%;
-}
+  }
 
-.total{
+  .total{
   font-size: 20px;
   text-align: center;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-}
+  }
 
-.logout{
+  .logout{
   font-size: 20px;
   margin-left:5%;
-}
+  }
 
-.remind{
+  .remind{
   margin-right: inherit;
   text-align: right;
-}
+  }
 
-.footer{
+  .footer{
   height:150px;
-  background-color: #130a32;
+
+  background-color:#012e69;
   width:100%;
   margin-top: 17%;
-}
+  }
 
   </style>
 
@@ -130,6 +131,8 @@ if(!!window.performance && window.performance.navigation.type == 2)
     <div class="add">
    <a href="{% url 'add-amount' user %}">
    <font style="color:#1f1348">Add amount</font></a>
+   <a href="{% url 'remind' user %}"><font style="color:#1f1348; margin-left:10%">Add reminders</font></a>
+     <a href="{% url 'dashboard' user month%}"><font style="color:#1f1348; margin-left:10%">Dashboard</font></a>
      <a href="{% url 'logout' user %}"><font style="color:#1f1348; margin-left:10%">logout</font></a>
 </div>
 
@@ -159,10 +162,8 @@ if(!!window.performance && window.performance.navigation.type == 2)
   {% endif %}
 
 </table>
-<br>
-
-  <div class="footer">
-  </div>
+<div class="footer">
+</div>
 
 </body>
 </html>

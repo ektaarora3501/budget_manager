@@ -26,7 +26,7 @@
   padding-bottom: 10px;
   text-align: left;
   background-color: #42f5ec;
-  color: white;
+  color:#012e69;
 }
 
 
@@ -69,7 +69,7 @@ font{
 }
 
 .add{
-  margin-left:60%;
+  margin-left:50%;
   font-size: 20px;
   color: black;
   margin-top: auto;
@@ -121,7 +121,7 @@ if(!!window.performance && window.performance.navigation.type == 2)
 {
     window.location.reload();
 }
-</script>
+  </script>
 <body onunload="">
   <div class="header">
     Budget manager
@@ -132,6 +132,7 @@ if(!!window.performance && window.performance.navigation.type == 2)
    <font style="color:#1f1348">Add amount</font></a>
      <a href="{% url 'logout' user %}"><font style="color:#1f1348; margin-left:10%">logout</font></a>
      <a href="{% url 'show_all' user %}"><font style="color:#1f1348; margin-left:10%">Show Reminders</font></a>
+     <a href="{% url 'main-page' user %}"><font style="color:#1f1348; margin-left:10%">Main page</font></a>
 </div>
 
   </div>

@@ -15,7 +15,7 @@
 <style>
 .sidenav {
   height: 100%;
-  width: 130px;
+  width: 150px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -28,13 +28,14 @@
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 25px;
-  color: #818181;
+  font-size: 20px;
+  color:  #012e69;
   display: block;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #7482b8;
+
 }
 
 .main {
@@ -55,22 +56,27 @@ color:white;
 
 
 #myDiv{
-  margin-top: 10%;
+  margin-top: 4%;
+}
+
+.arrange{
+  max-width: 40%;
 }
 
 .footer{
   height:150px;
   background-color:#012e69;
-  width:100%;
-  margin-top: 40%;
+  width:150%;
+  color: white;
 }
 
 #test{
   width: 100%;
 }
 
-
-
+#myDiv,#notify{
+  display: inline-block;
+}
 </style>
 </head>
 <body onunload="">
@@ -79,26 +85,40 @@ color:white;
   </div>
 
   <div class="sidenav">
-  <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#clients">Clients</a>
-  <a href="#contact">Contact</a>
+  <a href="{% url 'main-page' user %}">Main Page</a>
+  <a href="{% url 'dashboard' user month %}">Dashboard</a>
+  <a href="{% url 'show_all' user %}">Show reminders</a>
+  <a href="{% url 'logout' user %}">Logout</a>
 </div>
 <div class="main">
   This chart shows your current month spent history
   <table>
     <tr>
     <td>
-  <div id='myDiv'>
+  <div id='myDiv'></div>
+  </td>
+  <td>
+    <div id="notify">
+      notification block
+      this is the notification block for reminders
     </div>
   </td>
 </tr>
-<tr>
-  <td>
+  <tr>
+    <td>
     <div id='test'>
     </div>
-</td>
 
+</td>
+</tr>
+<tr>
+<td>
+  <div class="footer">
+    Contact us
+  </div>
+
+</td>
+</tr>
   <script>
 {% if sts %}
   var b=[];
@@ -119,7 +139,7 @@ color:white;
 
   var layout = {
   height: 500,
-  width: 600
+  width: 600,
   };
 
   Plotly.newPlot('myDiv', data, layout);
@@ -141,7 +161,7 @@ color:white;
 
     var layout = {
     height: 500,
-    width: 800,
+    width: 1000,
     };
 
 
@@ -155,6 +175,7 @@ color:white;
       no budget to display
     </div>
   {% endif %}
+
 </div>
 
 </body>
